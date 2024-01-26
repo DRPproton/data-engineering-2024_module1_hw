@@ -1,0 +1,39 @@
+Query for question 3
+
+SELECT COUNT(*) from public.green_taxi_data as gtd
+WHERE date(gtd.lpep_pickup_datetime) = '2019-09-18'
+AND date(gtd.lpep_dropoff_datetime) = '2019-09-18';
+
+#------------------------------------------------------------------------#
+
+Query for question 4
+
+SELECT max(gtd.trip_distance) as trip_dis, date(gtd.lpep_pickup_datetime)
+FROM public.green_taxi_data as gtd
+group by date(gtd.lpep_pickup_datetime) order by trip_dis desc;
+
+
+#-------------------------------------------------------------------------#
+
+Query for question 5
+
+SELECT sum(gtd.total_amount) as total, z."Borough"
+FROM public.green_taxi_data as gtd, public.zones as z
+WHERE gtd."DOLocationID" = z."LocationID"
+and date(gtd.lpep_pickup_datetime) = '2019-09-18'
+group by z."Borough" 
+order by total desc;
+
+#--------------------------------------------------------------------------#
+
+Query for question 6
+
+SELECT z2."Zone", max(gtd.tip_amount) as Max_tip
+FROM public.green_taxi_data as gtd
+inner join public.zones as z
+on gtd."PULocationID"= z."LocationID"
+inner join public.zones as z2
+on gtd."DOLocationID" = z2."LocationID"
+WHERE z."Zone" = 'Astoria'
+group by z2."Zone"
+order by Max_tip desc;
