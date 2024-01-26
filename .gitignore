@@ -2,3 +2,4 @@
 *.backup
 *.tfstate
 *.hcl
+*.13.0_x5
